@@ -19,7 +19,7 @@ class Result extends StatelessWidget {
           ),
           Text(
             bmi.toStringAsFixed(1),
-            style: const sTextStyle(fontSize: 30),
+            style: const TextStyle(fontSize: 30),
           ),
           const Text(
             'です',
