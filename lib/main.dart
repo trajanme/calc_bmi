@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:math';
+import 'package:calc_bmi/result.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
         title: 'Calc BMI',
         home: Scaffold(
             appBar: AppBar(
-              title: const Text('BMIを計算するよ'),
+              title: const Text('BMI計算アプリ'),
             ),
             body: const Home()));
   }
@@ -28,7 +29,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     double? height;
     double? weight;
-    double? bmi;
+    double bmi;
 
     return SingleChildScrollView(
       child: Column(children: [
@@ -56,33 +57,19 @@ class Home extends StatelessWidget {
         ),
         ElevatedButton(
             onPressed: () {
+              bmi = 0.0;
               double w = weight ?? 0;
               double h = height ?? 0;
-              if (h != 0) {
+              if (h != 0 && w != 0) {
                 bmi = w / (pow(h, 2) / 10000);
-                print('$height : $weight : $bmi');
+                debugPrint('$height : $weight : $bmi');
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Result(bmi: bmi)));
               } else {
                 bmi = 0;
               }
             },
             child: const Text('計算')),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              '私のBMIは',
-              style: TextStyle(fontSize: 20),
-            ),
-            Text(
-              '$bmi',
-              style: const TextStyle(fontSize: 30),
-            ),
-            const Text(
-              'です',
-              style: TextStyle(fontSize: 20),
-            ),
-          ],
-        ),
       ]),
     );
   }
